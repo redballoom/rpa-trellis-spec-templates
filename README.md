@@ -18,7 +18,7 @@ Trellis                 = 可选的任务、记忆和 Spec 编排工具
 仓库发布后，可通过自定义 registry 初始化：
 
 ```bash
-trellis init --registry https://github.com/redballoom/rpa-trellis-spec-templates
+trellis init --registry git@github.com:redballoom/rpa-trellis-spec-templates.git --template rpa-python-shadowbot --codex
 ```
 
 Trellis 会读取 registry index，并将所选模板目录内容安装到项目的 `.trellis/spec/`。
@@ -26,6 +26,8 @@ Trellis 会读取 registry index，并将所选模板目录内容安装到项目
 
 - `index.json`：兼容 Trellis CLI 的 registry 根入口
 - `marketplace/index.json`：保留 marketplace 目录结构，便于后续扩展 workflow 等模板类型
+
+说明：公开 HTTPS 地址也可以作为 registry，但 Trellis 0.6.6 的 giget 下载路径会启用离线缓存。开发和验证阶段优先使用 SSH registry，可直接走 git 后端并避免旧模板缓存。
 
 ## 使用原则
 
