@@ -34,6 +34,7 @@
 3. 本 Spec 不反向要求模板依赖 Trellis，也不拥有 runner 状态机。
 4. 外部通知、Base、工单和 Agent 平台都按可选集成描述。
 5. 从单个业务项目回收规则前，确认它可跨项目复用且不包含私有字段或数据。
+6. `index.json` 与 `marketplace/index.json` 应保持一致，前者用于 Trellis CLI registry 发现，后者用于 marketplace 结构表达。
 
 ## 漂移检查
 
@@ -48,4 +49,3 @@
 - skills 是否改变“先契约、后实现”和故障证据读取顺序
 
 只有确认变化属于跨项目稳定规则后，才更新公共 Spec。
-
