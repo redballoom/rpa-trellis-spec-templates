@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "rpa-python-shadowbot",
+      "type": "spec",
+      "name": "RPA Python + ShadowBot",
+      "description": "面向影刀调度 Python Code 项目的契约、handler、异常、日志、测试与修复规范",
+      "path": "marketplace/specs/rpa-python-shadowbot",
+      "tags": [
+        "rpa",
+        "python",
+        "shadowbot",
+        "contract-first",
+        "runner"
+      ]
+    }
+  ]
+}
