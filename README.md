@@ -21,7 +21,7 @@ Trellis                 = 可选的任务、记忆和 Spec 编排工具
 trellis init --registry https://github.com/redballoom/rpa-trellis-spec-templates
 ```
 
-Trellis 会读取 registry index，并将所选模板下的 `spec/` 内容安装到项目的 `.trellis/spec/`。
+Trellis 会读取 registry index，并将所选模板目录内容安装到项目的 `.trellis/spec/`。
 当前仓库同时保留两个入口：
 
 - `index.json`：兼容 Trellis CLI 的 registry 根入口
