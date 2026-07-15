@@ -5,14 +5,17 @@
       "id": "rpa-python-shadowbot",
       "type": "spec",
       "name": "RPA Python + ShadowBot",
-      "description": "面向影刀调度 Python Code 项目的契约、handler、异常、日志、测试与修复规范",
+      "description": "面向影刀调度 Python Code 项目的契约、本地Gate进度、可选Base投影、handler、异常、日志、测试、交付与修复规范",
       "path": "marketplace/specs/rpa-python-shadowbot",
       "tags": [
         "rpa",
         "python",
         "shadowbot",
         "contract-first",
-        "runner"
+        "runner",
+        "gate-progress",
+        "local-progress",
+        "base-summary"
       ]
     }
   ]

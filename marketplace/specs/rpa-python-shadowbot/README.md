@@ -17,6 +17,8 @@
 ## 开发前最小阅读路径
 
 - 新业务：`guides/requirement-to-contract.md` -> `backend/runner-contract.md` -> `backend/handler-patterns.md`
+- Trellis 本地进度 / Gate：`guides/local-progress-tracking.md`
+- 飞书 Base 可选投影：`guides/gate-progress-base.md`
 - 影刀和 Python 分工不清：`guides/shadowbot-boundary.md`
 - 异常或状态设计：`backend/error-handling.md`
 - 输出、日志和验收：`backend/logging-and-output.md`、`backend/testing-and-delivery.md`
@@ -30,4 +32,5 @@
 - 影刀只根据标准 runner 结果分支，不解析 Python traceback。
 - 不把 Trellis、Base、Git 平台或外部工单系统变成 Python 运行依赖。
 - 没有测试或运行证据时，不宣称交付完成。
+- Trellis Plan 后应形成本地 Gate 路线图；每个 Gate 经用户确认后先记录本地检查点，配置了 Base 时再同步管理摘要。
 

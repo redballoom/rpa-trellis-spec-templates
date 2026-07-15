@@ -8,7 +8,7 @@
 
 ```text
 rpa-dev-template        = Python 运行底座和影刀调用契约
-rpa-dev-template-skills = 初始化、业务契约、故障修复等专业动作
+rpa-dev-template-skills = 初始化、业务契约、故障修复、进度与交付收尾等专业动作
 本仓库                  = Agent 写代码和检查代码时参考的工程规范
 Trellis                 = 可选的任务、记忆和 Spec 编排工具
 ```
@@ -53,4 +53,7 @@ Trellis 会读取 registry index，并将所选模板目录内容安装到项目
 - Codex、Claude、Cursor 等特定 Agent 主机配置
 - Trellis 任务状态机或会话数据
 - 飞书 Base 表结构和同步逻辑
+- 项目私有 Gate 路线图和 Base 记录内容
 - 生产密钥、账号、Cookie、客户数据
+
+本仓库可以定义跨项目稳定的本地进度字段与检查点规则，但实际 `task.json`、`progress.md` 和 Base 记录始终保存在具体项目或目标系统中。
