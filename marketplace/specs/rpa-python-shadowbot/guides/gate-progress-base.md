@@ -6,6 +6,15 @@ The goal is to project accepted local Trellis progress into Feishu Base without 
 
 Read `local-progress-tracking.md` first. It defines the canonical Gate route, local snapshot, checkpoint history, and Gate close transaction. This guide only defines the optional Base projection.
 
+Before projecting anything to Base, inspect the local state first. When the `rpa-delivery-close` scripts are available, run or emulate:
+
+```powershell
+python <skill-dir>\scripts\rpa_collab.py --project-root <project-root> status
+python <skill-dir>\scripts\rpa_collab.py --project-root <project-root> suggest
+```
+
+Base should mirror the accepted local checkpoint or explicit recovery calibration. It should not be used to decide the current Gate when Trellis/Git/runner evidence says something different.
+
 ## Ownership
 
 ```text
@@ -111,11 +120,12 @@ Do not sync secrets, tokens, full payloads, complete logs, customer-sensitive ro
 
 For each Gate:
 
-1. Agent reports the completed work and evidence.
-2. User accepts, rejects, or requests changes.
-3. After acceptance, Agent first updates and reads back local Trellis progress.
-4. If Base is configured, Agent projects the accepted checkpoint to Base.
-5. If evidence is incomplete, keep the Gate open and record the blocker instead of advancing it.
+1. Agent reads local status and identifies whether the next action is checkpoint, gate close, recovery, or finish.
+2. Agent reports the completed work, evidence, risk, and proposed local write.
+3. User accepts, rejects, or requests changes.
+4. After acceptance, Agent first updates and reads back local Trellis progress.
+5. If Base is configured, Agent projects the accepted checkpoint to Base.
+6. If evidence is incomplete, keep the Gate open and record the blocker instead of advancing it.
 
 This keeps Base progress aligned with human acceptance, not just Agent optimism.
 
@@ -170,6 +180,7 @@ When the Gate route changes materially, update the project route text and either
 - Do not use Base as the only copy of PRD or implementation details.
 - Do not let Base failure block `run.bat`, `runner.py`, or business handlers.
 - Do not mark a Gate complete before user acceptance when the Gate requires business judgment.
+- Do not sync Base from chat memory without first checking local Trellis progress and evidence.
 - Do not omit local Trellis recording just because implementation or tests passed.
 - Do not require a Base link when the project is intentionally local-only.
 - Do not treat a legacy `.rpa_ai/handoff` file as the authority for harness-independent projects.

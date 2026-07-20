@@ -40,6 +40,19 @@ G5 业务验收归档
 
 Blocking is orthogonal to Gate progress. Keep `current_gate` unchanged and set `blocked=true` with a reason and owner. Do not replace the current Gate with a generic blocked Gate.
 
+The Gate route is a canonical trunk, not a blind conveyor belt. Before writing progress, inspect local facts first: Trellis task lifecycle, `task.json.meta.progress`, `progress.md`, Git evidence, runner outputs, and user acceptance. The default accepted-Gate path advances sequentially, but stale or contradictory records should be handled with an explicit `recovery` calibration, and reopened work should be recorded as a new checkpoint with a clear reason instead of overwriting history.
+
+Recommended command discipline when the `rpa-delivery-close` skill scripts are available:
+
+```powershell
+trellis init --registry gh:redballoom/rpa-trellis-spec-templates/marketplace --template rpa-python-shadowbot --codex
+python <skill-dir>\scripts\rpa_collab.py --project-root <project-root> bootstrap --project-name "<name>"
+python <skill-dir>\scripts\rpa_collab.py --project-root <project-root> status
+python <skill-dir>\scripts\rpa_collab.py --project-root <project-root> suggest
+```
+
+Use `bootstrap` only to attach a newly initialized code project to local collaboration tracking. The normal path requires a full Trellis workspace with `.trellis/spec`; do not create a task-only `.trellis` directory for formal projects. The bootstrap step should create or recognize the delivery task and write an initial G0/G1 snapshot when missing. If progress already exists, preserve it and read back status instead of overwriting. Only after the read-only status check should the Agent propose `checkpoint`, `gate-close`, `recovery`, or `finish`.
+
 ## Snapshot Schema
 
 Store the current local snapshot under `task.json.meta.progress`. Preserve all other Trellis fields and existing `meta` content.
@@ -118,14 +131,17 @@ Do not claim the Gate is locally closed until the snapshot and checkpoint histor
 
 On a new session, read in this order:
 
-1. `task.py current --source`, when an active pointer exists.
-2. Current or explicitly named task `task.json`.
-3. `task.json.meta.progress`.
-4. The latest entry in task `progress.md`.
-5. PRD, design, and implementation artifacts.
-6. Recent Git commits and relevant runner evidence.
+1. `rpa_collab.py status` / `suggest`, when the guard CLI is available.
+2. `task.py current --source`, when an active pointer exists.
+3. Current or explicitly named task `task.json`.
+4. `task.json.meta.progress`.
+5. The latest entry in task `progress.md`.
+6. PRD, design, and implementation artifacts.
+7. Recent Git commits and relevant runner evidence.
 
 The Trellis workspace journal remains useful for developer-wide session history, but it does not replace task-local progress because a journal entry may cover several tasks or may not have been written yet.
+
+If task lifecycle and progress disagree, such as a completed or archived task whose progress still assigns work to a user or Agent, do not continue as if the latest chat message were authoritative. Report the drift, explain the evidence, and write one recovery checkpoint after user awareness.
 
 ## Optional Base Projection
 
