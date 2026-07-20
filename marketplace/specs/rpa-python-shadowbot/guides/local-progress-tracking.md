@@ -53,6 +53,8 @@ python <skill-dir>\scripts\rpa_collab.py --project-root <project-root> suggest
 
 Use `bootstrap` only to attach a newly initialized code project to local collaboration tracking. The normal path requires a full Trellis workspace with `.trellis/spec`; do not create a task-only `.trellis` directory for formal projects. The bootstrap step should create or recognize the delivery task and write an initial G0/G1 snapshot when missing. If progress already exists, preserve it and read back status instead of overwriting. Only after the read-only status check should the Agent propose `checkpoint`, `gate-close`, `recovery`, or `finish`.
 
+If Trellis creates a system task such as `00-bootstrap-guidelines`, do not treat it as the business delivery task. For default status recovery, prefer the only active task whose `task.json.meta.progress.current_gate` exists. Require an explicit task only when multiple delivery tasks have local progress.
+
 ## Snapshot Schema
 
 Store the current local snapshot under `task.json.meta.progress`. Preserve all other Trellis fields and existing `meta` content.
