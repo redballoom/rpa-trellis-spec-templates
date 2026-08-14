@@ -71,13 +71,13 @@ python tools/doctor.py
 
 | 证据组 | 检查内容 |
 | --- | --- |
-| Trellis / Harness | PRD、设计、实施计划、任务状态、archive 或 journal 与实际交付一致 |
 | Git | 关键代码和文档变化有可追溯 commit；运行产物、日志、真实输入和密钥未提交 |
 | 测试 | 相关测试已执行，或说明无法执行的原因 |
 | runner | 有可定位的 `run_id` 和 `runner_{run_id}.json`；状态为 `success` 或用户接受的 `warning` |
 | 影刀 / 业务 | 影刀真实调用路径清楚，用户已核对业务输出或接受剩余限制 |
-| 本地进度 | `task.json.meta.progress`、任务 `progress.md`、当前 Gate、下一步和责任方与实际一致 |
-| Base（可选） | 配置了管理 Base 时，其 Gate、下一步和里程碑摘要来自本地已接受检查点 |
+| Trellis Task | PRD、设计、计划、Task 状态、证据引用、delivery state 和 Final Summary 与实际一致 |
+| Hermes Gate | `.hermes/project.json` 与 Gate 历史符合用户已接受的项目阶段事实 |
+| Base（可选） | 配置了管理 Base 时，其摘要可追溯到 Hermes、Trellis 和证据系统 |
 
 Stage H 结论只能是：
 
@@ -85,31 +85,27 @@ Stage H 结论只能是：
 - `needs_user_review`：证据存在，但仍需用户确认验收、写入授权、提交、归档或 Base 更新。
 - `blocked`：缺少关键证据或运行失败，应说明最小下一步。
 
-不要用测试通过替代业务验收；不要用 Git commit 替代 runner 证据；不要用 Base 摘要替代 Trellis 或项目文档。
+不要用测试通过替代业务验收；不要用 Git commit 替代 runner 证据；不要用 Trellis archive 替代 Hermes Gate；不要用 Base 摘要替代任何权威来源。
 
-## Gate 进度同步
+## Gate 与 Task 分层记录
 
-项目不必等到最终交付才记录进度。每个高价值 Gate 经用户确认后，先更新 Trellis 本地快照并追加任务检查点；配置了 Base 时，再准备或同步一条管理里程碑。
+项目不必等到最终交付才记录事实，但 Task 和 Gate 必须写入各自的权威来源：
 
-推荐事件：
+- Trellis Task 记录工程计划、重要发现、阻塞、下一工程动作和证据引用。
+- Hermes 记录项目 `current_gate`、Gate close 和 G5 后的 revalidation。
+- Git/PR 记录代码变化与技术接纳。
+- runner 记录目标环境执行结果。
+- Base 如启用，只在这些事实保存并回读成功后组合展示。
 
-```text
-PRD待确认
-允许开发
-关键Git提交
-联调结论
-业务验收结果
-```
-
-Gate 进度同步只保存脱敏摘要和证据指针，不复制完整聊天、payload、日志、客户数据或 Trellis 任务树。
+所有记录只保存必要的脱敏结论和证据指针，不复制完整聊天、payload、日志、客户数据或 Trellis 任务树。
 
 每次 Gate 完成报告必须显式询问：
 
 ```text
-当前 Gate 是否验收通过，并记录到 Trellis？
+当前 Gate 是否验收通过，并记录到 Hermes？
 ```
 
-配置了 Base 时再询问是否同时同步。没有 Base 的项目仍可完成本地验收和归档；用户要求 Base 同步但缺少链接或 record_id 时，才请求补充目标记录。
+配置了 Base 时，用户可另行要求刷新管理展示。Base 缺失或写入失败不能影响 Hermes Gate、Trellis Task、runner 或业务交付。
 
 ## 最终报告
 
@@ -122,7 +118,8 @@ Agent 应简明说明：
 - 修改文件和 Git 事实
 - 测试命令及结果
 - 影刀侧人工检查项
-- Trellis 本地当前 Gate、检查点和下一步是否已记录
-- 配置了 Base 时，其 Gate 和里程碑是否已同步
+- Trellis Task 状态、证据、下一工程动作和 Final Summary 是否已记录
+- Hermes 当前 Gate 和必要的 close/revalidation 事件是否已记录
+- 配置了 Base 时，其展示是否可追溯到权威来源
 - 当前是否已完成、待联调或待验收
 

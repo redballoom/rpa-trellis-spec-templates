@@ -56,8 +56,9 @@
 
 ## 外部工具边界
 
-- Trellis 或其他 Harness 管理 Agent 内部任务、记忆和 Spec，不进入 Python 运行依赖。
-- 飞书 Base 展示业务、项目、任务、验收和运行事实，不保存 Agent 的每一步内部推理。
+- Trellis 管理工程 Task、记忆和 Spec，不进入 Python 运行依赖。
+- Hermes 管理项目唯一 G0-G5、人工验收和 Gate 历史，不进入 Python 运行依赖。
+- 飞书 Base 如启用，只读组合展示业务、项目、任务、验收和运行事实，不反写 Trellis 或 Hermes。
 - Git 记录代码变化事实，不替代 runner 验证。
 - runner 和影刀真实运行是执行结果的权威证据。
 

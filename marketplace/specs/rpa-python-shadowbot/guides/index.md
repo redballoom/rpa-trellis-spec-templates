@@ -9,8 +9,8 @@
 | [Requirement to Contract](./requirement-to-contract.md) | 业务方提出新需求或改变输入输出时 |
 | [ShadowBot Boundary](./shadowbot-boundary.md) | 不确定逻辑应放在影刀还是 Python 时 |
 | [Fix Loop](./fix-loop.md) | runner 失败、重复重试或输出不符合预期时 |
-| [Local Progress Tracking](./local-progress-tracking.md) | 需要跨会话恢复、记录当前 Gate、检查点、下一步或阻塞时 |
-| [Gate Progress And Optional Base Projection](./gate-progress-base.md) | 已有本地检查点，需要将已接受进度投影到 Base 时 |
+| [Local Progress Tracking](./local-progress-tracking.md) | 需要跨会话组合恢复 Hermes Gate、Trellis Task 和证据时 |
+| [Gate Progress And Optional Base Projection](./gate-progress-base.md) | 项目明确配置 Base，只读展示权威状态时 |
 
 ## 快速判断
 
@@ -18,12 +18,13 @@
 新需求
   -> 先拆影刀 / Python / 人的职责
   -> 定义 input、type、payload、output、status、acceptance
-  -> 生成 Gate 路线图并写入 Trellis 本地进度
+  -> 在 Trellis Task 中形成 PRD、设计和计划
+  -> 在 Hermes 中确认项目 Gate 与验收基线
   -> 用户确认契约
   -> Agent 实现并测试
   -> 用户完成影刀接入和业务验收
-  -> 每个 Gate 验收后记录本地检查点
-  -> 配置了 Base 时再同步管理里程碑
+  -> 每个 Gate 验收后只写入 Hermes Gate 历史
+  -> 配置了 Base 时再组合展示 Hermes、Trellis 和证据
 
 运行失败
   -> 收集 input + runner + log + snapshot + 样例
@@ -31,7 +32,7 @@
   -> 修复最小正确范围
   -> 测试 + runner 回归
   -> 再交回影刀联调
-  -> 修复 Gate 验收后同步问题边界或关键提交摘要
+  -> 在 Trellis Task 记录修复证据，必要时由 Hermes 记录 Gate 复核
 ```
 
 ## 更新原则
