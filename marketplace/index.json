@@ -5,7 +5,7 @@
       "id": "rpa-python-shadowbot",
       "type": "spec",
       "name": "RPA Python + ShadowBot",
-      "description": "面向影刀调度 Python Code 项目的契约、Trellis Task、Hermes Gate、handler、异常、日志、测试、交付与修复规范",
+      "description": "面向影刀调度 Python Code 项目的契约、Trellis Task、Project Gate、handler、异常、日志、测试、交付与修复规范",
       "path": "marketplace/specs/rpa-python-shadowbot",
       "tags": [
         "rpa",
@@ -14,7 +14,7 @@
         "contract-first",
         "runner",
         "trellis-task",
-        "hermes-gate",
+        "project-gate",
         "evidence"
       ]
     }

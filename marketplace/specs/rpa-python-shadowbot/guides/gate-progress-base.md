@@ -2,14 +2,14 @@
 
 Use this guide only when a project explicitly configures a Feishu Base management view.
 
-Base is not required for project recovery, Task execution, runner operation, Gate acceptance, or release. It has no authority to create or update Trellis Task state or Hermes Gate state.
+Base is not required for project recovery, Task execution, runner operation, Gate acceptance, or release. It has no authority to create or update Trellis Task state or Project Gate state.
 
 Read `local-progress-tracking.md` first. It defines the authoritative sources and recovery order.
 
 ## Ownership
 
 ```text
-Hermes                    = project current Gate and accepted Gate events
+Project Gate Controller                    = project current Gate and accepted Gate events
 Trellis                   = engineering Task, plan, notes, references, and archive
 Git / PR                  = code version and technical acceptance
 runner / logs             = target-environment execution evidence
@@ -24,7 +24,7 @@ Base can combine summaries from these sources. It must not become a second write
 
 Before preparing a Base update, read the authoritative sources directly:
 
-1. Hermes current Gate and latest Gate event.
+1. Project Gate Controller current Gate and latest Gate event.
 2. Trellis Task ID, title, native status, delivery state, blocker, and next engineering action.
 3. Linked Issue, PR, commit, test, and runner references.
 4. The accepted conclusion that is safe to expose in a management view.
@@ -37,11 +37,11 @@ A management record may show:
 
 | Field | Source |
 | --- | --- |
-| `当前Gate` | Hermes `.hermes/project.json` |
-| `最近Gate事件` | latest accepted Hermes Gate history event |
+| `当前Gate` | Project Gate Controller `.project-gates/project.json` |
+| `最近Gate事件` | latest accepted Project Gate history event |
 | `当前工程Task` | Trellis Task |
 | `Task状态` | Trellis native status plus schema-governed delivery state |
-| `下一步建议` | Task-owned next action or Hermes next acceptance action, clearly labelled |
+| `下一步建议` | Task-owned next action or Project Gate Controller next acceptance action, clearly labelled |
 | `是否阻塞` / `阻塞说明` | Trellis Task blocker |
 | `证据引用` | Git, PR, tests, runner, and approved document references |
 
@@ -51,12 +51,12 @@ The projection must retain source identifiers so a reader can return to the auth
 
 When the user requests a Base update:
 
-1. Read Hermes, Trellis, Git/PR, and runner facts.
+1. Read Project Gate Controller, Trellis, Git/PR, and runner facts.
 2. Detect and report conflicts before projecting.
 3. Prepare a concise, desensitized summary with source references.
 4. Ask for the target Base record only when it is not already configured.
 5. Write the Base view after the authoritative state is saved and read back.
-6. If Base write fails, report the projection failure without changing or rolling back Hermes, Trellis, Git, or runner facts.
+6. If Base write fails, report the projection failure without changing or rolling back Project Gate Controller, Trellis, Git, or runner facts.
 
 Base updates never close a Gate, archive a Task, close an Issue, merge a PR, or publish a release.
 
@@ -73,7 +73,7 @@ Repeated delivery of the same source event must update or no-op the same project
 ## Anti-Patterns
 
 - Do not use Base as the only copy of project Gate or Task status.
-- Do not write Base state back into Hermes or Trellis.
+- Do not write Base state back into Project Gate Controller or Trellis.
 - Do not let Base availability block `run.bat`, `runner.py`, handler execution, Task recovery, or Gate acceptance.
 - Do not create one Base record for every tool call or small code edit.
 - Do not project unaccepted Gate conclusions as completed.

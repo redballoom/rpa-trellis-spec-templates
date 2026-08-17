@@ -76,8 +76,8 @@ python tools/doctor.py
 | runner | 有可定位的 `run_id` 和 `runner_{run_id}.json`；状态为 `success` 或用户接受的 `warning` |
 | 影刀 / 业务 | 影刀真实调用路径清楚，用户已核对业务输出或接受剩余限制 |
 | Trellis Task | PRD、设计、计划、Task 状态、证据引用、delivery state 和 Final Summary 与实际一致 |
-| Hermes Gate | `.hermes/project.json` 与 Gate 历史符合用户已接受的项目阶段事实 |
-| Base（可选） | 配置了管理 Base 时，其摘要可追溯到 Hermes、Trellis 和证据系统 |
+| Project Gate | `.project-gates/project.json` 与 Gate 历史符合用户已接受的项目阶段事实 |
+| Base（可选） | 配置了管理 Base 时，其摘要可追溯到 Project Gate Controller、Trellis 和证据系统 |
 
 Stage H 结论只能是：
 
@@ -85,14 +85,14 @@ Stage H 结论只能是：
 - `needs_user_review`：证据存在，但仍需用户确认验收、写入授权、提交、归档或 Base 更新。
 - `blocked`：缺少关键证据或运行失败，应说明最小下一步。
 
-不要用测试通过替代业务验收；不要用 Git commit 替代 runner 证据；不要用 Trellis archive 替代 Hermes Gate；不要用 Base 摘要替代任何权威来源。
+不要用测试通过替代业务验收；不要用 Git commit 替代 runner 证据；不要用 Trellis archive 替代 Project Gate；不要用 Base 摘要替代任何权威来源。
 
 ## Gate 与 Task 分层记录
 
 项目不必等到最终交付才记录事实，但 Task 和 Gate 必须写入各自的权威来源：
 
 - Trellis Task 记录工程计划、重要发现、阻塞、下一工程动作和证据引用。
-- Hermes 记录项目 `current_gate`、Gate close 和 G5 后的 revalidation。
+- Project Gate Controller 记录项目 `current_gate`、Gate close 和 G5 后的 revalidation。
 - Git/PR 记录代码变化与技术接纳。
 - runner 记录目标环境执行结果。
 - Base 如启用，只在这些事实保存并回读成功后组合展示。
@@ -102,10 +102,10 @@ Stage H 结论只能是：
 每次 Gate 完成报告必须显式询问：
 
 ```text
-当前 Gate 是否验收通过，并记录到 Hermes？
+当前 Gate 是否验收通过，并记录到 Project Gate Controller？
 ```
 
-配置了 Base 时，用户可另行要求刷新管理展示。Base 缺失或写入失败不能影响 Hermes Gate、Trellis Task、runner 或业务交付。
+配置了 Base 时，用户可另行要求刷新管理展示。Base 缺失或写入失败不能影响 Project Gate、Trellis Task、runner 或业务交付。
 
 ## 最终报告
 
@@ -119,7 +119,7 @@ Agent 应简明说明：
 - 测试命令及结果
 - 影刀侧人工检查项
 - Trellis Task 状态、证据、下一工程动作和 Final Summary 是否已记录
-- Hermes 当前 Gate 和必要的 close/revalidation 事件是否已记录
+- Project Gate Controller 当前 Gate 和必要的 close/revalidation 事件是否已记录
 - 配置了 Base 时，其展示是否可追溯到权威来源
 - 当前是否已完成、待联调或待验收
 

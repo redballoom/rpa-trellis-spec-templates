@@ -11,7 +11,7 @@ rpa-dev-template        = Python 运行底座和影刀调用契约
 rpa-dev-template-skills = 初始化、业务契约、故障修复、进度与交付收尾等专业动作
 本仓库                  = Agent 写代码和检查代码时参考的工程规范
 Trellis                 = 正式协作项目的工程 Task、记忆和 Spec 编排工具
-Hermes                  = 项目唯一 G0-G5、人工验收和 Gate 历史
+Project Gate Controller                  = 项目唯一 G0-G5、人工验收和 Gate 历史
 ```
 
 ## 安装
@@ -57,7 +57,7 @@ Trellis 会读取 registry index，并将所选模板目录内容安装到项目
 - Codex、Claude、Cursor 等特定 Agent 主机配置
 - Trellis 任务状态机或会话数据
 - 飞书 Base 表结构和同步逻辑
-- 项目私有 Hermes Gate 数据和 Base 记录内容
+- 项目私有 Project Gate 数据和 Base 记录内容
 - 生产密钥、账号、Cookie、客户数据
 
-本仓库可以定义跨项目稳定的权责与恢复规则，但不定义第二套 Task 或 Gate 状态。工程 Task 只写入项目 `.trellis/`，项目 Gate 只写入 `.hermes/`；Base 仅可作为只读组合展示。
+本仓库可以定义跨项目稳定的权责与恢复规则，但不定义第二套 Task 或 Gate 状态。工程 Task 只写入项目 `.trellis/`，项目 Gate 只写入 `.project-gates/`；Base 仅可作为只读组合展示。

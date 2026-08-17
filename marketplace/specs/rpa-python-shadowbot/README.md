@@ -17,7 +17,7 @@
 ## 开发前最小阅读路径
 
 - 新业务：`guides/requirement-to-contract.md` -> `backend/runner-contract.md` -> `backend/handler-patterns.md`
-- Trellis Task / Hermes Gate 恢复：`guides/local-progress-tracking.md`
+- Trellis Task / Project Gate 恢复：`guides/local-progress-tracking.md`
 - 飞书 Base 只读组合展示：`guides/gate-progress-base.md`
 - 影刀和 Python 分工不清：`guides/shadowbot-boundary.md`
 - 异常或状态设计：`backend/error-handling.md`
@@ -32,5 +32,5 @@
 - 影刀只根据标准 runner 结果分支，不解析 Python traceback。
 - 不把 Trellis、Base、Git 平台或外部工单系统变成 Python 运行依赖。
 - 没有测试或运行证据时，不宣称交付完成。
-- Trellis 只管理工程 Task；项目 G0-G5 经用户确认后只记录到 Hermes。Base 如启用，只组合展示权威来源。
+- Trellis 只管理工程 Task；项目 G0-G5 经用户确认后只记录到 Project Gate Controller。Base 如启用，只组合展示权威来源。
 

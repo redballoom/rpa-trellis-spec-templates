@@ -31,8 +31,8 @@
 
 1. 运行行为变化先在 `rpa-dev-template` 中通过代码、测试和文档完成，再更新本 Spec。
 2. Skill 工作顺序变化先在 `rpa-dev-template-skills` 中确认，再更新本 Spec 的相关指南。
-3. 本 Spec 不让 Python runtime 依赖 Trellis 或 Hermes，也不拥有 runner 状态机。
-4. Trellis 是工程 Task 唯一事实源；Hermes 是项目 Gate 唯一事实源。
+3. 本 Spec 不让 Python runtime 依赖 Trellis 或 Project Gate Controller，也不拥有 runner 状态机。
+4. Trellis 是工程 Task 唯一事实源；Project Gate Controller 是项目 Gate 唯一事实源。
 5. 外部通知、Base、工单和 Agent 平台都按可选集成描述，不能反写 Task 或 Gate。
 6. 从单个业务项目回收规则前，确认它可跨项目复用且不包含私有字段或数据。
 7. `index.json` 与 `marketplace/index.json` 应保持一致，前者用于 Trellis CLI registry 发现，后者用于 marketplace 结构表达。
