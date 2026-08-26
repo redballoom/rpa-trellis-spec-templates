@@ -75,7 +75,7 @@ python tools/doctor.py
 | 测试 | 相关测试已执行，或说明无法执行的原因 |
 | runner | 有可定位的 `run_id` 和 `runner_{run_id}.json`；状态为 `success` 或用户接受的 `warning` |
 | 影刀 / 业务 | 影刀真实调用路径清楚，用户已核对业务输出或接受剩余限制 |
-| Trellis Task | PRD、设计、计划、Task 状态、证据引用、delivery state 和 Final Summary 与实际一致 |
+| Trellis Task | PRD、设计、计划、Task 状态、证据引用、delivery state、可选 delivery route 和 Final Summary 与实际一致 |
 | Project Gate | `.project-gates/project.json` 与 Gate 历史符合用户已接受的项目阶段事实 |
 | Base（可选） | 配置了管理 Base 时，其摘要可追溯到 Project Gate Controller、Trellis 和证据系统 |
 
@@ -92,6 +92,7 @@ Stage H 结论只能是：
 项目不必等到最终交付才记录事实，但 Task 和 Gate 必须写入各自的权威来源：
 
 - Trellis Task 记录工程计划、重要发现、阻塞、下一工程动作和证据引用。
+- Trellis Task 可记录当前 Issue 的可选 G2-G5 delivery route，但不得复制项目 current_gate；旧 Task 无 route 时仍兼容。
 - Project Gate Controller 记录项目 `current_gate`、Gate close 和 G5 后的 revalidation。
 - Git/PR 记录代码变化与技术接纳。
 - runner 记录目标环境执行结果。

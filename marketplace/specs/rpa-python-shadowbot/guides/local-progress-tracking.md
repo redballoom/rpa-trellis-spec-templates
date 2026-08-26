@@ -6,9 +6,10 @@ The recovery view must answer these questions without relying on chat history:
 
 1. Which project Gate is current, and what Gate events were accepted?
 2. Which Trellis Task is active, planned, blocked, or awaiting review?
-3. What was the latest verified engineering result?
-4. What happens next, and who owns that action?
-5. Which Git, PR, test, runner, or business evidence supports the state?
+3. Which G2-G5 reviews does the current Issue delivery require?
+4. What was the latest verified engineering result?
+5. What happens next, and who owns that action?
+6. Which Git, PR, test, runner, or business evidence supports the state?
 
 ## Authority
 
@@ -24,7 +25,7 @@ Gitea Issue                       = original requirement and discussion
 
 One fact has one writer. Do not copy `current_gate` into `task.json`, Task metadata, Task notes, workspace journals, Base, or `.rpa_ai/handoff`.
 
-Trellis Task metadata may contain Task-owned delivery fields such as `delivery_state`, Issue/PR references, runner references, blocker detail, and next engineering action. It must not contain a second project Gate snapshot or Gate history.
+Trellis Task metadata may contain Task-owned delivery fields such as `delivery_state`, optional `delivery_route`, Issue/PR references, runner references, blocker detail, and next engineering action. It must not contain a second project Gate snapshot or Gate history.
 
 ## Project Gates
 
@@ -43,6 +44,36 @@ The project Gate advances only forward. Each Gate is formally closed once. After
 
 Blocking is orthogonal to the project Gate. Keep the Project Gate unchanged and record the Task-owned blocker in Trellis. A blocked Task does not create a new Gate.
 
+## Issue-Scoped Delivery Route
+
+Project lifecycle and the current Issue delivery are separate dimensions. An
+operational project remains at G5 while a maintenance Task may repeat G2-, G3-,
+G4-, or G5-nature reviews.
+
+When the route is explicitly confirmed, Trellis may store this optional sibling
+under `task.json.meta`:
+
+```json
+{
+  "delivery_route": {
+    "change_class": "major_change",
+    "entry": "G2",
+    "required_reviews": ["G2", "G3", "G4", "G5"],
+    "completed_reviews": [],
+    "project_revalidations": ["G2", "G4", "G5"]
+  }
+}
+```
+
+This object belongs to one Task and never contains `current_gate`. Missing
+`delivery_route` is valid for older Tasks and must not block archive. Use the RPA
+delivery adapter to write the structured object; Trellis `task.py set-meta` stores
+values as strings and is not suitable for nested JSON.
+
+`project_revalidations` is a declared review intention, not proof that a Gate was
+revalidated. Each actual event remains append-only in Project Gate Controller and
+requires separate user acceptance and evidence.
+
 ## Trellis Task Progress
 
 Trellis is the only engineering Task authority. Store these facts in the Task artifacts or supported `task.json.meta` fields:
@@ -52,6 +83,7 @@ Trellis is the only engineering Task authority. Store these facts in the Task ar
 - important implementation findings, blockers, and recovery point;
 - Issue, PR, commit, test, runner, and decision references;
 - `delivery_state` such as `paused`, `blocked`, or `in_review` when the Project Gate Controller adapter defines it;
+- optional `delivery_route` for the current Issue's G2-G5 review path;
 - final engineering summary before archive.
 
 Do not create a parallel Task checkpoint system. Agent-native Todo remains free for current-session steps; only cross-session facts belong in Trellis.
@@ -64,7 +96,7 @@ On a new session, read in this order:
 
 1. Project Gate Controller `status`, or `.project-gates/project.json` and the latest Gate history event.
 2. Trellis current Task and all `planning` / `in_progress` Tasks.
-3. The selected Task's PRD, design, implementation plan, notes, metadata, and final summary.
+3. The selected Task's PRD, design, implementation plan, delivery route, notes, metadata, and final summary.
 4. The linked Gitea Issue and PR.
 5. Git branch, working tree, and recent commits.
 6. Relevant tests, runner result, logs, and target-environment evidence.
@@ -97,6 +129,10 @@ Trellis archive is a technical operation and does not enforce the delivery evide
 - target-environment result;
 - required user acceptance;
 - final summary and remaining risks.
+
+Run the delivery-route check separately when a route is present. The archive
+guard itself must not require a route from legacy Tasks or treat route
+declaration as review completion.
 
 Keep `session_auto_commit: false` in `.trellis/config.yaml` so archive and journal operations do not commit without user authorization.
 

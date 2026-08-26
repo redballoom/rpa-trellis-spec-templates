@@ -18,6 +18,7 @@
 新需求
   -> 先拆影刀 / Python / 人的职责
   -> 定义 input、type、payload、output、status、acceptance
+  -> 明确三项交付要求和本次 Issue 的 G2-G5 review route
   -> 在 Trellis Task 中形成 PRD、设计和计划
   -> 在 Project Gate Controller 中确认项目 Gate 与验收基线
   -> 用户确认契约

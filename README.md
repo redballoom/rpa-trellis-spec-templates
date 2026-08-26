@@ -60,4 +60,4 @@ Trellis 会读取 registry index，并将所选模板目录内容安装到项目
 - 项目私有 Project Gate 数据和 Base 记录内容
 - 生产密钥、账号、Cookie、客户数据
 
-本仓库可以定义跨项目稳定的权责与恢复规则，但不定义第二套 Task 或 Gate 状态。工程 Task 只写入项目 `.trellis/`，项目 Gate 只写入 `.project-gates/`；Base 仅可作为只读组合展示。
+本仓库可以定义跨项目稳定的权责与恢复规则，但不定义第二套 Task 或 Gate 状态。工程 Task 只写入项目 `.trellis/`，可选 `delivery_route` 只描述当前 Issue 的 G2-G5 复核路线；项目 Gate 只写入 `.project-gates/`；Base 仅可作为只读组合展示。

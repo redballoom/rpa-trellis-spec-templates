@@ -60,6 +60,21 @@
 - retryable:
 - boundary/fix target:
 
+### 交付要求
+- require_pr: true | false
+- require_runner: true | false
+- require_user_acceptance: true | false
+- working_branch:
+- decision_reason:
+
+### 本次交付路线（不改变项目 current_gate）
+- change_class:
+- entry: G2 | G3 | G4 | G5
+- required_reviews: []
+- completed_reviews: []
+- project_revalidations: []
+- route_reason:
+
 ### 验收
 - sample input:
 - expected output:
@@ -78,8 +93,13 @@
 - runner status 预期
 - 影刀接下来如何消费结果
 - 最小验收样例
+- PR、runner 和用户验收是否要求，以及本次 Issue 的 G2-G5 复核路线
 
 用户可用“契约确认，开始实现”等明确表达进入实现阶段。
+
+对于 G5 后维护，项目 Gate 保持 G5。既有契约仍有效时通常从 G3
+技术验证开始；改变输入输出契约、兼容策略、范围边界或验收基线时从
+G2 复核开始。旧 Task 没有 `delivery_route` 时保持兼容，不自动补写。
 
 ## 第五步：实现与同步
 
