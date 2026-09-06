@@ -67,6 +67,7 @@
 
 1. 运行 Controller `status`；若有 `unaccepted_delivery_drift`、`history_diverged`、多 active Task 或非法 route，停止归档。
 2. 若要求 runner，先运行 `evidence-check --summary evidence/runs/{run_id}.summary.json`，并要求 `valid=true`、`delivery_ready=true`。
+   `valid` 只表示历史摘要有效；`delivery_ready` 还要求当前交付代码兼容。Schema 2 保留运行时精确 commit 和原始工作树状态，新增交付代码清洁度。只保存摘要或 Gate/Task/journal 记录的后续提交不要求重跑；代码、Spec、配置、依赖、契约、Skill 指令或未知文件变更必须重验。读取 Controller `version_check`，不要把摘要 commit 改写为当前 HEAD。
 3. 运行 `delivery-route-check`（Task 配置 route 时）与 `archive-check`；要求 `ready=true`。`require_pr=true` 时另行核对 PR review/check 的真实平台状态，因为 URL 本身不是验收。
 4. 完成第三次主要确认及其适用的 Gate close/revalidation，并读回 Project Gate Controller。
 5. 用户已授权归档后，运行 `python .trellis/scripts/task.py archive <task-name> --no-commit`；再次读取 Task 列表与 Controller `status`。
