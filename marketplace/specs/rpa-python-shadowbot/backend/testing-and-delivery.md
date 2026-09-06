@@ -56,6 +56,8 @@ python tools/doctor.py
 
 不要提交运行产物和敏感数据。是否 commit、push、merge 或发布，由用户明确决定；Agent 不因 Trellis 任务完成而自动执行这些外部动作。
 
+业务实现与生成式治理文件应按 [Delivery Diff Hygiene](../guides/delivery-diff-hygiene.md) 分区审阅。保持 `session_auto_commit: false`；Gate、Task archive 和 workspace journal 完成并读回后，如用户授权提交，最多形成一个独立治理提交，不把这些变化混入业务实现提交。
+
 ## 完成交付的最低证据
 
 - 契约已确认，或变更严格遵循既有已确认契约。

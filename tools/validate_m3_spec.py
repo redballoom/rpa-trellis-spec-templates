@@ -59,7 +59,18 @@ def validate() -> list[str]:
     )
     require_text(
         SPEC / "backend" / "testing-and-delivery.md",
-        ["PR 必须在 G3 acceptance 前真实存在", "actual review result", "passed check/CI evidence"],
+        [
+            "PR 必须在 G3 acceptance 前真实存在",
+            "actual review result",
+            "passed check/CI evidence",
+            "Delivery Diff Hygiene",
+            "session_auto_commit: false",
+        ],
+        errors,
+    )
+    require_text(
+        SPEC / "guides" / "delivery-diff-hygiene.md",
+        ["业务实现", "治理记录", "运行产物", "最多一个后置提交", "不扩大权限"],
         errors,
     )
     validate_links(errors)

@@ -11,6 +11,7 @@
 | [Fix Loop](./fix-loop.md) | runner 失败、重复重试或输出不符合预期时 |
 | [Local Progress Tracking](./local-progress-tracking.md) | 需要跨会话组合恢复 Project Gate、Trellis Task 和证据时 |
 | [Collaboration Entry](./collaboration-entry.md) | 创建/启动/归档正式 Task，或处理三次主要确认与 PR 时序时 |
+| [Delivery Diff Hygiene](./delivery-diff-hygiene.md) | 准备 commit/PR，或 Gate、archive、journal 产生治理文件时 |
 | [Gate Progress And Optional Base Projection](./gate-progress-base.md) | 项目明确配置 Base，只读展示权威状态时 |
 
 ## 快速判断
