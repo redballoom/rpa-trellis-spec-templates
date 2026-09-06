@@ -10,6 +10,7 @@
 | [ShadowBot Boundary](./shadowbot-boundary.md) | 不确定逻辑应放在影刀还是 Python 时 |
 | [Fix Loop](./fix-loop.md) | runner 失败、重复重试或输出不符合预期时 |
 | [Local Progress Tracking](./local-progress-tracking.md) | 需要跨会话组合恢复 Project Gate、Trellis Task 和证据时 |
+| [Collaboration Entry](./collaboration-entry.md) | 创建/启动/归档正式 Task，或处理三次主要确认与 PR 时序时 |
 | [Gate Progress And Optional Base Projection](./gate-progress-base.md) | 项目明确配置 Base，只读展示权威状态时 |
 
 ## 快速判断
@@ -21,7 +22,7 @@
   -> 明确三项交付要求和本次 Issue 的 G2-G5 review route
   -> 在 Trellis Task 中形成 PRD、设计和计划
   -> 在 Project Gate Controller 中确认项目 Gate 与验收基线
-  -> 用户确认契约
+  -> 用户确认契约与实施授权
   -> Agent 实现并测试
   -> 用户完成影刀接入和业务验收
   -> 每个 Gate 验收后只写入 Project Gate 历史

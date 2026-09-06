@@ -27,6 +27,8 @@ One fact has one writer. Do not copy `current_gate` into `task.json`, Task metad
 
 Trellis Task metadata may contain Task-owned delivery fields such as `delivery_state`, optional `delivery_route`, Issue/PR references, runner references, blocker detail, and next engineering action. It must not contain a second project Gate snapshot or Gate history.
 
+Accepted baseline and amendment also remain Project Gate Controller facts. A Task may retain only evidence pointers such as `commit:<sha>` or `.project-gates/gate-history.md#<event-id>`; it must not copy an `accepted_baseline` object or amendment event into Task metadata.
+
 ## Project Gates
 
 Project Gate Controller owns exactly one project route:
@@ -82,6 +84,7 @@ Trellis is the only engineering Task authority. Store these facts in the Task ar
 - PRD, design, and implementation plan as required by complexity;
 - important implementation findings, blockers, and recovery point;
 - Issue, PR, commit, test, runner, and decision references;
+- portable runner references should point to `evidence/runs/{run_id}.summary.json`; do not copy its payload, messages, credentials, or private raw runner into Task metadata;
 - `delivery_state` such as `paused`, `blocked`, or `in_review` when the Project Gate Controller adapter defines it;
 - optional `delivery_route` for the current Issue's G2-G5 review path;
 - final engineering summary before archive.
@@ -129,6 +132,8 @@ Trellis archive is a technical operation and does not enforce the delivery evide
 - target-environment result;
 - required user acceptance;
 - final summary and remaining risks.
+
+Use the formal start/archive sequence in [Collaboration Entry](./collaboration-entry.md). When `require_pr=true`, a URL alone is not technical acceptance: the PR must already exist before G3 acceptance, and the Task must reference an actual review result plus passed checks.
 
 Run the delivery-route check separately when a route is present. The archive
 guard itself must not require a route from legacy Tasks or treat route

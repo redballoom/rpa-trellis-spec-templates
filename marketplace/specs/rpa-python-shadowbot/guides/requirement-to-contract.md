@@ -95,7 +95,7 @@
 - 最小验收样例
 - PR、runner 和用户验收是否要求，以及本次 Issue 的 G2-G5 复核路线
 
-用户可用“契约确认，开始实现”等明确表达进入实现阶段。
+用户可用“契约确认，开始实现”等明确表达同时完成第二次主要确认：接受契约与验收基线，并授权在已确认范围内实施。正式 `task.py start` 仍须先执行 [Collaboration Entry](./collaboration-entry.md) 的 active-task preflight。
 
 对于 G5 后维护，项目 Gate 保持 G5。既有契约仍有效时通常从 G3
 技术验证开始；改变输入输出契约、兼容策略、范围边界或验收基线时从

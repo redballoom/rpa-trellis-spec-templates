@@ -11,6 +11,16 @@
 | `rpa-dev-template-skills` 独立化分支 | `codex/harness-independent-skills` |
 | `rpa-dev-template-skills` 基线提交 | `b05fb88` |
 
+## M3 对齐基线
+
+记录日期：2026-09-06
+
+| 资产 | 基线 |
+| --- | --- |
+| `rpa-dev-template` 可迁移运行证据 | `c1f33a7` |
+| Project Gate Controller accepted baseline / amendment / evidence check | `1dc1ee6` |
+| Trellis CLI | `0.6.14` |
+
 主要事实来源：
 
 - `README.md`

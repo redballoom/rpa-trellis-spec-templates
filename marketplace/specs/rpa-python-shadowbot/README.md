@@ -18,6 +18,7 @@
 
 - 新业务：`guides/requirement-to-contract.md` -> `backend/runner-contract.md` -> `backend/handler-patterns.md`
 - Trellis Task / Project Gate 恢复：`guides/local-progress-tracking.md`
+- 正式 Task 入口、三次主要确认和 PR 时序：`guides/collaboration-entry.md`
 - 飞书 Base 只读组合展示：`guides/gate-progress-base.md`
 - 影刀和 Python 分工不清：`guides/shadowbot-boundary.md`
 - 异常或状态设计：`backend/error-handling.md`
@@ -33,4 +34,5 @@
 - 不把 Trellis、Base、Git 平台或外部工单系统变成 Python 运行依赖。
 - 没有测试或运行证据时，不宣称交付完成。
 - Trellis 只管理工程 Task；项目 G0-G5 经用户确认后只记录到 Project Gate Controller。Base 如启用，只组合展示权威来源。
+- 用户主路径只设置三次主要确认；G0-G5 仍作为可审计的内部事件逐项保存。
 

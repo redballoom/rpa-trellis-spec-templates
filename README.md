@@ -33,6 +33,12 @@ Trellis 会读取 registry index，并将所选模板目录内容安装到项目
 
 当前基线固定为 Trellis `0.6.14`。不要使用未固定版本的 `latest` 初始化正式项目。
 
+初始化后的关键结果：
+
+- `.trellis/spec/guides/collaboration-entry.md` 提供三次主要确认、Task start/archive preflight 和 A18 PR 时序。
+- `.trellis/config.yaml` 保留 registry source 和模板 ID；Project Gate Controller bootstrap 负责把 `session_auto_commit` 校准为 `false`。
+- 模板只安装 Spec，不生成 `run.bat`、`runner.py`、Project Gate 状态或业务 Task。
+
 ## 使用原则
 
 1. 先使用 `rpa-dev-template` 初始化可运行项目。
@@ -40,6 +46,17 @@ Trellis 会读取 registry index，并将所选模板目录内容安装到项目
 3. Agent 开发前阅读相关 `index.md` 和任务涉及的具体规范。
 4. 以当前项目代码、Schema、测试和文档为最终事实；若与本 Spec 不一致，先确认实际契约，再更新项目 Spec。
 5. 项目私有字段、客户规则、账号和密钥只留在项目内，不回写公共模板。
+
+## 维护验证
+
+修改模板后运行：
+
+```powershell
+python -m unittest discover -s tests -v
+python tools/validate_m3_spec.py
+```
+
+校验覆盖 registry 索引一致性、模板内链接，以及正式 Task 入口、三次主要确认和 A18 PR review/check 约束。它验证本仓库规范，不声称修改或强化 Trellis 上游 CLI。
 
 ## 当前模板
 

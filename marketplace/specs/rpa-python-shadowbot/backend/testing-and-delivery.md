@@ -64,6 +64,7 @@ python tools/doctor.py
 - 如可行，已用 runner 样例验证标准结果和业务输出。
 - 影刀侧仍需人工完成的接入或验收项已明确列出。
 - 剩余风险和未验证项已说明。
+- `require_pr=true` 时，PR 必须在 G3 acceptance 前真实存在；只有 `pr_url` 不足以通过，必须同时记录 actual review result 与 passed check/CI evidence。
 
 ## Stage H 最终校准
 
