@@ -33,11 +33,11 @@
 
 1. 在请求 G3 技术接受之前创建 PR，并把可访问的 `pr_url` 写入 Task evidence。
 2. 从 Git 平台读取 PR 当前状态，不以“准备创建”“已有分支”或本地 diff 代替 PR。
-3. 至少记录一项实际 review 结论和一项已通过的 check/CI 结论；各自保留可返回来源的 URL、check 名称或审查记录引用。
-4. 将上述事实写入 `meta.archive_evidence.technical_checks`，并在 G3 close/revalidation 的 evidence 中引用它们。
+3. 至少记录一项实际 review 结论和一项已通过的 check/CI 结论；来源在 G2 确认：本地检查与 GitHub check-runs 分开，记录型人/Agent 审查与 GitHub 正式 Review 分开，不强制虚构平台 CI。
+4. 用 `meta.delivery_contract` 声明已确认的范围、Issue、review/check 来源和所需检查名称；在 `archive_evidence` 关联精确 commit、原始审查/测试记录与产物 hash。运行 `delivery-check --stage G3`，要求 ready=true；G3 close/revalidation 本身也会强制检查。
 5. review 未通过、checks 缺失/运行中/失败，或只有 `pr_url` 时，G3 不得标记完成。
 
-最小示例：
+以下仅展示旧 technical_checks 元数据形态，不再单独构成当前交付就绪。新来源契约、记录样例和 CLI 以已安装 `rpa-delivery-close/references/delivery-evidence-contract.md` 为准：
 
 ```json
 {
@@ -65,15 +65,17 @@
 
 归档前按以下顺序执行：
 
-1. 运行 Controller `status`；若有 `unaccepted_delivery_drift`、`history_diverged`、多 active Task 或非法 route，停止归档。
+1. 运行 Controller `status`；读出旧接受与当前代码的关系。新维护交付可以接受新版本，但必须建立该 Task 的新证据，不得直接沿用旧接受。未恢复操作、多 active Task 或非法 route 先处理。
 2. 若要求 runner，先运行 `evidence-check --summary evidence/runs/{run_id}.summary.json`，并要求 `valid=true`、`delivery_ready=true`。
    `valid` 只表示历史摘要有效；`delivery_ready` 还要求当前交付代码兼容。Schema 2 保留运行时精确 commit 和原始工作树状态，新增交付代码清洁度。只保存摘要或 Gate/Task/journal 记录的后续提交不要求重跑；代码、Spec、配置、依赖、契约、Skill 指令或未知文件变更必须重验。读取 Controller `version_check`，不要把摘要 commit 改写为当前 HEAD。
-3. 运行 `delivery-route-check`（Task 配置 route 时）与 `archive-check`；要求 `ready=true`。`require_pr=true` 时另行核对 PR review/check 的真实平台状态，因为 URL 本身不是验收。
-4. 完成第三次主要确认及其适用的 Gate close/revalidation，并读回 Project Gate Controller。
-5. 用户已授权归档后，运行 `python .trellis/scripts/task.py archive <task-name> --no-commit`；再次读取 Task 列表与 Controller `status`。
+3. 按需运行 `delivery-check --stage G4` 与 `delivery-check --stage G5`，检查 Task/Issue/scope/commit 绑定，以及原始输入与 runner 摘要的 hash。原始输入只留本地，不上传私有业务数据。
+4. 完成第三次主要确认及其适用的 Gate close/revalidation，并读回 Project Gate Controller；维护 Task 的接受与项目 Gate 复核仍分开，不强制每次维护重走全套 Gate。
+5. 运行统一 `archive-check`，要求 ready=true。用户单独授权归档后，用 Controller `delivery-archive --confirm-archive`：它再次校验 GitHub/本地证据，调用 Trellis `archive <task-name> --no-commit`，再回读归档结果。
 6. Git commit、push、PR merge、Issue close 和发布都是独立动作，只按用户授权执行。
 
 原生 Trellis start/archive 仍可被直接调用，因此 Agent 必须把以上 preflight 当作正式入口；不能宣称 Trellis CLI 自身已经强制这些规则。
+
+旧项目使用 `historical-check` 查看历史，它始终 ready=false，不撤销历史接受，也不授权新交付。评论是时间点陈述；之后归档的 Task 不受旧评论“未归档”覆盖。check.jsonl 是上下文索引，不能当作测试通过报告。没有自动 commit 绑定的旧 runner 不得绕过新交付检查。
 
 ## 引用而不复制
 

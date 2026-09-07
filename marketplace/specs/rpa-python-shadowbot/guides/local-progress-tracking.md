@@ -20,7 +20,7 @@ Trellis .trellis/tasks/           = engineering Task lifecycle and artifacts
 Trellis .trellis/workspace/       = cross-session engineering journal
 Git / PR                          = code version and technical acceptance
 runner / logs                     = target-environment execution evidence
-Gitea Issue                       = original requirement and discussion
+GitHub Issue/comments             = original requirement and time-scoped discussion
 ```
 
 One fact has one writer. Do not copy `current_gate` into `task.json`, Task metadata, Task notes, workspace journals, Base, or `.rpa_ai/handoff`.
@@ -100,7 +100,7 @@ On a new session, read in this order:
 1. Project Gate Controller `status`, or `.project-gates/project.json` and the latest Gate history event.
 2. Trellis current Task and all `planning` / `in_progress` Tasks.
 3. The selected Task's PRD, design, implementation plan, delivery route, notes, metadata, and final summary.
-4. The linked Gitea Issue and PR.
+4. The linked GitHub Issue, comments and PR; read their timestamps and provenance.
 5. Git branch, working tree, and recent commits.
 6. Relevant tests, runner result, logs, and target-environment evidence.
 7. Long-term project decisions and constraints.
@@ -135,9 +135,11 @@ Trellis archive is a technical operation and does not enforce the delivery evide
 
 Use the formal start/archive sequence in [Collaboration Entry](./collaboration-entry.md). When `require_pr=true`, a URL alone is not technical acceptance: the PR must already exist before G3 acceptance, and the Task must reference an actual review result plus passed checks.
 
-Run the delivery-route check separately when a route is present. The archive
-guard itself must not require a route from legacy Tasks or treat route
-declaration as review completion.
+The strict archive guard combines source policy, Task/Issue/scope/commit binding,
+GitHub facts, local artifacts and any configured route. A missing optional route
+is compatible; a declared route must have its required reviews completed. Route
+declaration alone is never review completion. Use historical-check for old Tasks;
+it does not grant current-delivery clearance or revoke historical acceptance.
 
 Keep `session_auto_commit: false` in `.trellis/config.yaml` so archive and journal operations do not commit without user authorization.
 

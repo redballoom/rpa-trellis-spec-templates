@@ -13,7 +13,7 @@ Project Gate Controller                    = project current Gate and accepted G
 Trellis                   = engineering Task, plan, notes, references, and archive
 Git / PR                  = code version and technical acceptance
 runner / logs             = target-environment execution evidence
-Gitea Issue               = original requirement and discussion
+GitHub Issue / comments   = original requirement and discussion
 Base                      = optional read-only management projection
 user                      = business acceptance and irreversible authorization
 ```
